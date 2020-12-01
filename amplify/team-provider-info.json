@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-reactmusicplayer2-dev-170116-authRole",
+      "UnauthRoleArn": "arn:aws:iam::800019203272:role/amplify-reactmusicplayer2-dev-170116-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::800019203272:role/amplify-reactmusicplayer2-dev-170116-authRole",
+      "Region": "ap-southeast-2",
+      "DeploymentBucketName": "amplify-reactmusicplayer2-dev-170116-deployment",
+      "UnauthRoleName": "amplify-reactmusicplayer2-dev-170116-unauthRole",
+      "StackName": "amplify-reactmusicplayer2-dev-170116",
+      "StackId": "arn:aws:cloudformation:ap-southeast-2:800019203272:stack/amplify-reactmusicplayer2-dev-170116/76cf1a90-32d1-11eb-b701-0a4dbdfe4bb0",
+      "AmplifyAppId": "d1tw40rvpc3jdh"
+    },
+    "categories": {
+      "auth": {
+        "reactmusicplayer2e2a4532d": {}
+      }
+    }
+  }
+}
