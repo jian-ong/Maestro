@@ -1,5 +1,5 @@
 import './App.css';
-import Amplify, { API, graphqlOperation } from 'aws-amplify';
+import Amplify, { API, graphqlOperation, Storage } from 'aws-amplify';
 import awsconfig from './aws-exports';
 import { AmplifySignOut, withAuthenticator } from '@aws-amplify/ui-react';
 import React, { useState, useEffect } from 'react';
@@ -8,17 +8,41 @@ import { updateSong } from './graphql/mutations';
 
 import { Paper, IconButton } from '@material-ui/core'
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import PauseIcon from '@material-ui/icons/Pause';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import ReactPlayer from 'react-player';
 
 Amplify.configure(awsconfig);
 
 function App() {
   const [songs, setSongs] = useState([]);
+  const [songPlaying, setSongPlaying] = useState('')
+  const [audioURL, setAudioURL] = useState('')
 
   useEffect(() => {
     fetchSongs()
   },[])
   // empty array to break infinite loop
+
+  const toggleSong = async idx => {
+    if (songPlaying === idx) {
+      setSongPlaying('');
+      return;
+    }
+
+    const songFilePath = songs[idx].filePath;
+    try {
+      const fileAccessURL = await Storage.get(songFilePath, { expires: 60 });
+      console.log('access url', fileAccessURL);
+      setSongPlaying(idx);
+      setAudioURL(fileAccessURL);
+      return;
+    } catch (error) {
+      console.error('error accessing the file from s3', error);
+      setAudioURL('');
+      setSongPlaying('');
+    }
+};
 
   const fetchSongs = async () => {
     try {
@@ -58,8 +82,8 @@ function App() {
           return (
             <Paper variant="outlined" elevation={2} key={`song${idx}`}>  
               <div className="songCard">
-                <IconButton aria-label="play">
-                  <PlayArrowIcon />
+                <IconButton aria-label="play" onClick={()=> toggleSong(idx)}>
+                { songPlaying === idx? <PauseIcon/> : <PlayArrowIcon /> }
                 </IconButton>
                 <div>
                   <div className="songTitle">{song.title}</div>
@@ -73,6 +97,20 @@ function App() {
                 </div>
                 <div className="songDescription">{song.description}</div>
               </div>
+              {
+                songPlaying === idx ? (
+                  <div className="ourAudioPlayer">
+                    <ReactPlayer 
+                    url={audioURL}
+                    controls
+                    playing
+                    // controls and playing is set to true, so that controls appear and it starts playing as soon as it loads
+                    height="50px"
+                    onPause={() => toggleSong(idx)}
+                    />
+                  </div>
+                ) : null
+              }
             </Paper>
           )}
         )}
