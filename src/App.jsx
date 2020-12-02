@@ -4,13 +4,19 @@ import awsconfig from './aws-exports';
 import { AmplifySignOut, withAuthenticator } from '@aws-amplify/ui-react';
 import React, { useState, useEffect } from 'react';
 import { listSongs } from './graphql/queries';
-import { updateSong } from './graphql/mutations';
+import { updateSong, createSong } from './graphql/mutations';
 
-import { Paper, IconButton } from '@material-ui/core'
+import ReactPlayer from 'react-player';
+
+import { v4 as uuid} from 'uuid'
+//imported version 4 of uuid
+
+import { Paper, IconButton, TextField } from '@material-ui/core'
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import PauseIcon from '@material-ui/icons/Pause';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
-import ReactPlayer from 'react-player';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 
 Amplify.configure(awsconfig);
 
@@ -18,6 +24,7 @@ function App() {
   const [songs, setSongs] = useState([]);
   const [songPlaying, setSongPlaying] = useState('')
   const [audioURL, setAudioURL] = useState('')
+  const [showAddSong, setShowAddSong] = useState(false)
 
   useEffect(() => {
     fetchSongs()
@@ -114,9 +121,71 @@ function App() {
             </Paper>
           )}
         )}
+{/* add song */}
+        {
+          showAddSong ? (
+            <AddSong onUpload={() => {
+              setShowAddSong(false)
+              fetchSongs()
+            }} />
+
+          ) : ( <IconButton onClick={() => setShowAddSong(true)}> 
+            <AddCircleIcon />
+            </IconButton>
+          )}
       </div>
     </div>
   );
 }
 
 export default withAuthenticator(App);
+
+
+const AddSong = ({onUpload}) => {
+
+  const [songData, setSongData] = useState({});
+  const [mp3Data, setMp3Data] = useState()
+
+
+  const uploadSong = async () => {
+    console.log('songData', songData)
+    const {title, description, owner } = songData;
+
+    //uploading file from amplify to s3
+    //uuid generates random string of digits
+    const { key } = await Storage.put(`${uuid()}.mp3`,mp3Data, {contentType: 'audio/mp3'})
+
+    //recording into dynamo
+    const createSongInput = { 
+      id: uuid(),
+      title,
+      description,
+      owner,
+      filePath: key,
+      like: 0
+    }
+    await API.graphql(graphqlOperation(createSong, {input: createSongInput}))
+    onUpload()
+  }
+  return (
+    <div className="newSong">
+      <TextField 
+      label="Title" value={songData.title} onChange={e => setSongData({...songData, title: e.target.value})}
+      />
+
+      <TextField 
+      label="Artist" value={songData.owner} onChange={e => setSongData({...songData, owner: e.target.value})}
+      />
+
+      <TextField 
+      label="Description" value={songData.description} onChange={e => setSongData({...songData, description: e.target.value})}
+      />
+
+      <input type="file" accept="audio/mp3" onChange={e => setMp3Data(e.target.files[0])} />
+
+      <IconButton onClick={uploadSong} >
+        <CloudUploadIcon />
+      </IconButton>
+    </div>
+  )
+}
