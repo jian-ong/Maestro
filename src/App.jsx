@@ -143,13 +143,13 @@ function App() {
   );
 }
 
-const MyTheme = {
-  signInButtonIcon: { 'display': 'none' },
-  googleSignInButton: { 'backgroundColor': 'red', 'borderColor': 'red' }
-}
+// const MyTheme = {
+//   signInButtonIcon: { 'display': 'none' },
+//   googleSignInButton: { 'backgroundColor': 'red', 'borderColor': 'red' }
+// }
 
-// export default withAuthenticator(App);
-export default withAuthenticator(App, false, [], null, MyTheme);
+export default withAuthenticator(App);
+// export default withAuthenticator(App, false, [], null, MyTheme);
 
 
 const AddSong = ({onUpload}) => {
@@ -195,7 +195,7 @@ const AddSong = ({onUpload}) => {
       <input type="file" accept="audio/mp3" onChange={e => setMp3Data(e.target.files[0])} />
 
       <IconButton onClick={uploadSong} >
-        <CloudUploadIcon />
+        <CloudUploadIcon className="upload-icon" />
       </IconButton>
     </div>
   )
