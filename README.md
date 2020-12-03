@@ -18,7 +18,7 @@ Created during my GA course for education purposes only. My objective was to cre
 </ul>
 
 <h3>Technologies </h3>
-React.js, Amplify, Cognito, GraphQL, DynamoDB, S3 Storage, React-player, Material UI
+React.js, Amplify, Cognito, GraphQL, DynamoDB, S3, React-player, Material UI
 
 <h3>Architecture Overview </h3> 
 
