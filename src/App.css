@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  /* background-color: #27282b; */
+
 }
 
 .App-logo {
@@ -23,9 +25,15 @@
 }
 
 .songCard {
-  display: flex;
-  justify-content: space-around;
-  padding: 5px;
+  /* display: flex; */
+  /* justify-content: space-around; */
+  display: grid;
+  grid-template-columns: 3fr 10fr 3fr 5fr;
+  align-items: center;
+  padding: 30px;
+  height: 50px;
+  /* background-color: #27282b; */
+  /* color: whitesmoke; */
 }
 
 .songList {
@@ -40,4 +48,12 @@
 .ourAudioPlayer {
   display: flex;
   justify-content: center;
+}
+
+.MuiIconButton-root {
+  color: white;
+}
+
+PlayArrowIcon {
+  padding: 30px;
 }

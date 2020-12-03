@@ -49,7 +49,7 @@ function App() {
       setAudioURL('');
       setSongPlaying('');
     }
-};
+  };
 
   const fetchSongs = async () => {
     try {
@@ -130,7 +130,7 @@ function App() {
             }} />
 
           ) : ( <IconButton onClick={() => setShowAddSong(true)}> 
-            <AddCircleIcon />
+            <AddCircleIcon color="white"/>
             </IconButton>
           )}
       </div>
