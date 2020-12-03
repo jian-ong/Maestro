@@ -6,10 +6,11 @@ import React, { useState, useEffect } from 'react';
 import { listSongs } from './graphql/queries';
 import { updateSong, createSong } from './graphql/mutations';
 
+
 import ReactPlayer from 'react-player';
 
 import { v4 as uuid} from 'uuid'
-//imported version 4 of uuid
+//imported version 4 of uui
 
 import { Paper, IconButton, TextField } from '@material-ui/core'
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
@@ -17,6 +18,7 @@ import PauseIcon from '@material-ui/icons/Pause';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+
 
 Amplify.configure(awsconfig);
 
@@ -75,13 +77,16 @@ function App() {
         setSongs(songList);
     } catch (error) {
         console.log('error on adding Like to song', error);
-    }
-};
+      }
+    };
 
-  return (
-    <div className="App">
+
+
+    return (
+      
+      <div className="App">
       <header className="App-header">
-        <h2>Maestro</h2>
+      <img class="maestro-logo" src="maestro_logo.png" alt=""/>
         <AmplifySignOut />
       </header>
       <div className="songList">
@@ -130,7 +135,7 @@ function App() {
             }} />
 
           ) : ( <IconButton onClick={() => setShowAddSong(true)}> 
-            <AddCircleIcon color="white"/>
+            <AddCircleIcon />
             </IconButton>
           )}
       </div>
@@ -138,7 +143,13 @@ function App() {
   );
 }
 
-export default withAuthenticator(App);
+const MyTheme = {
+  signInButtonIcon: { 'display': 'none' },
+  googleSignInButton: { 'backgroundColor': 'red', 'borderColor': 'red' }
+}
+
+// export default withAuthenticator(App);
+export default withAuthenticator(App, false, [], null, MyTheme);
 
 
 const AddSong = ({onUpload}) => {
@@ -170,7 +181,7 @@ const AddSong = ({onUpload}) => {
   return (
     <div className="newSong">
       <TextField 
-      label="Title" value={songData.title} onChange={e => setSongData({...songData, title: e.target.value})}
+      label="Title" value={songData.title}  onChange={e => setSongData({...songData, title: e.target.value})}
       />
 
       <TextField 

@@ -25,8 +25,6 @@
 }
 
 .songCard {
-  /* display: flex; */
-  /* justify-content: space-around; */
   display: grid;
   grid-template-columns: 3fr 10fr 3fr 5fr;
   align-items: center;
@@ -39,6 +37,7 @@
 .songList {
   display: flex;
   flex-direction: column;
+  height: 100%
 }
 
 .songTitle {
@@ -48,12 +47,10 @@
 .ourAudioPlayer {
   display: flex;
   justify-content: center;
+  /* background-color: #27282b; */
 }
-
-.MuiIconButton-root {
-  color: white;
-}
-
-PlayArrowIcon {
-  padding: 30px;
-}
+ 
+.maestro-logo {
+  height: 150px;
+  margin: 20px;
+} 
