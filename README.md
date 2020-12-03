@@ -6,7 +6,7 @@ Deployed <a href="https://main.d1tw40rvpc3jdh.amplifyapp.com/">here</a>.
 ![playlist-page](/maestro-page.png?raw=true "playlist-page")
 
 <h3>Objective </h3>
-Created during my GA course for education purposes only. My objective was to create a simple application to consolidate my understanding of React and explore the integration of AWS services. 
+Created during my GA course for education purposes only. My objective was to create a simple application to consolidate my understanding of React and explore the integration of some AWS services. 
 
 <h3>Functionality </h3>
 <ul>
