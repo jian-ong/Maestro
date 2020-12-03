@@ -1,6 +1,8 @@
 <h1>Maestro </h1>
 Welcome to Maestro, A no-frills music player created using React!
 
+Deployed <a href="https://main.d1tw40rvpc3jdh.amplifyapp.com/">here</a>.
+
 ![playlist-page](/maestro-page.png?raw=true "playlist-page")
 
 <h3>Objective </h3>
